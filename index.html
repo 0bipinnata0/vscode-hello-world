@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TestNG Emailable Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .summary div {
+        background: #f2f2f2;
+        padding: 15px;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      .summary .passed {
+        color: green;
+      }
+
+      .summary .failed {
+        color: red;
+      }
+
+      .summary .skipped {
+        color: orange;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        border: 2px solid #f2f2f2;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+
+      th {
+        background-color: #f9f9f9;
+        font-weight: bold;
+      }
+
+      table th {
+        padding: 15px;
+      }
+
+      #groupsTable th,
+      #configTable th {
+        background-color: #f9f9f9;
+      }
+
+      #timestamps {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      #resultsTable {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        margin-top: 20px;
+        border: 1px solid #e0e0e0;
+      }
+
+      #resultsTable th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        color: #333;
+        padding: 10px;
+        text-align: left;
+      }
+
+      #resultsTable td {
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+      }
+
+      #resultsTable tr:nth-child(even) td {
+        background-color: #f9f9f9;
+      }
+
+      .passed td {
+        background-color: #e6ffe6;
+        color: green;
+      }
+
+      .failed td {
+        background-color: #ffe6e6;
+        color: red;
+      }
+
+      .skipped td {
+        background-color: #fff3e6;
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Test Report</h1>
+      <div class="summary">
+        <div class="total">Total Tests: 100</div>
+        <div class="passed">Passed Tests: 90</div>
+        <div class="failed">Failed Tests: 8</div>
+        <div class="skipped">Skipped Tests: 2</div>
+      </div>
+      <h2>Tests Details</h2>
+      <table id="resultsTable">
+        <!-- 你可以在这里插入测试结果 -->
+      </table>
+      <h2>Groups Details</h2>
+      <table id="groupsTable">
+        <!-- 你可以在这里插入组详情 -->
+      </table>
+      <h2>Configuration</h2>
+      <table id="configTable">
+        <!-- 你可以在这里插入配置详情 -->
+      </table>
+      <div id="timestamps">
+        <p>Start Time: 08:00:00</p>
+        <p>End Time: 09:30:00</p>
+      </div>
+    </div>
+  </body>
+  <script>
+    // 测试数据
+    var testData = [
+      // 添加了更多的示例
+      {
+        name: "Login Success",
+        status: "PASS",
+        description: "Login must be successful.",
+        time: "15ms",
+      },
+      {
+        name: "Login Failure",
+        status: "FAIL",
+        description: "Login must fail with wrong credentials.",
+        exception: "Authentication failed",
+        stackTrace: "Stack trace here",
+        time: "20ms",
+      },
+      {
+        name: "Search Test",
+        status: "PASS",
+        description: "Search function must work properly.",
+        time: "30ms",
+      },
+      {
+        name: "Registration",
+        status: "FAIL",
+        description: "User registration should succeed.",
+        exception: "Registration failed",
+        stackTrace: "Stack trace here",
+        time: "25ms",
+      },
+      {
+        name: "Logout",
+        status: "SKIP",
+        description: "Logout functionality.",
+        time: "5ms",
+      },
+      // 你可以继续添加更多测试数据
+    ];
+
+    // 组数据
+    var groupData = [
+      { name: "Login Tests", status: "FAIL" },
+      { name: "Search Tests", status: "PASS" },
+      { name: "Registration Tests", status: "FAIL" },
+      // 更多组数据
+    ];
+
+    // 配置数据
+    var configData = {
+      parameters: "Parameters here",
+      JVM: "JVM arguments here",
+      Environment: "Production",
+      // 更多配置数据
+    };
+    // 插入测试结果
+    var resultsTable = document.getElementById("resultsTable");
+    testData.forEach(function (test) {
+      var row = resultsTable.insertRow();
+      row.className = test.status.toLowerCase();
+      row.insertCell(0).innerHTML = test.name;
+      row.insertCell(1).innerHTML = test.status;
+      row.insertCell(2).innerHTML = test.description;
+      row.insertCell(3).innerHTML = test.time;
+      row.insertCell(4).innerHTML = test.exception || "";
+      row.insertCell(5).innerHTML = test.stackTrace || "";
+    });
+
+    // 插入组详情
+    var groupsTable = document.getElementById("groupsTable");
+    groupData.forEach(function (group) {
+      var row = groupsTable.insertRow();
+      row.insertCell(0).innerHTML = group.name;
+      row.insertCell(1).innerHTML = group.status;
+    });
+
+    // 插入配置详情
+    var configTable = document.getElementById("configTable");
+    var row = configTable.insertRow();
+    Object.values(configData).forEach(function (value) {
+      row.insertCell().innerHTML = value;
+    });
+  </script>
+</html>
